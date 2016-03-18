@@ -1,2 +1,2 @@
 dependencies:
-  - { role: sebbrochet.docker/centos, when: "ansible_os_family == 'RedHat'" } 
+  - { role: docker/centos, when: "ansible_os_family == 'RedHat'" } 
