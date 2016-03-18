@@ -1,0 +1,15 @@
+- name: add docker repo
+  copy: src="docker.repo" dest="/etc/yum.repos.d"
+
+- name: ensure docker-engine is installed
+  yum: pkg=docker-engine state=installed
+
+- name: create TCP configuration for Docker
+  template: src="{{ item }}.j2" dest="/usr/lib/systemd/system/{{ item }}"
+  with_items:
+     - "docker.service"
+  when: docker_tcp
+  notify: Restart Docker
+
+- name: ensure docker is running and started at boot
+  service: name=docker state=started enabled=yes
